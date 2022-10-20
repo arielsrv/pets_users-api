@@ -1,7 +1,11 @@
 package server
 
 import (
+	"log"
 	"net/http"
+
+	"github.com/internal/server/nrfiber"
+	"github.com/newrelic/go-agent/v3/newrelic"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -31,6 +35,20 @@ func New(config ...Config) *App {
 			Logger:    true,
 		},
 	}
+
+	nrapp, err := newrelic.NewApplication(
+		newrelic.ConfigAppName("pets_users-api"),
+		newrelic.ConfigLicense("2fe9cb4919c003a782ef3028322128dda528NRAL"),
+		newrelic.ConfigAppLogForwardingEnabled(true),
+	)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	app.Use(nrfiber.New(nrfiber.Config{
+		NewRelicApp: nrapp,
+	}))
 
 	if len(config) > 0 {
 		app.config = config[0]
