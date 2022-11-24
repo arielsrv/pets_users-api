@@ -7,7 +7,7 @@ require (
 	github.com/gofiber/swagger v0.1.7
 	github.com/newrelic/go-agent/v3 v3.20.1
 	github.com/stretchr/testify v1.8.1
-	github.com/swaggo/swag v1.8.7
+	github.com/swaggo/swag v1.8.8
 	github.com/valyala/fasthttp v1.41.0
 )
 
